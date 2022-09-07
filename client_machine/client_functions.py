@@ -65,14 +65,18 @@ def put_file(conn, cmd_opt):
     conn.send(bytes(str(file_size), "utf-8"))
     conn.recv(1024)
 
+    total_sent = 0
+    print('sent: ' + str(round(total_sent / file_size * 100, 2)) + '%')
     with open(file_name, "rb") as f:
         while True:
             data = f.read(2048)
             if not data:
                 break
             conn.send(data)
+            total_sent += len(data)
+            print('\033[1A' + 'Sent: ' + str(round(total_sent / file_size * 100, 2)) + '%')
 
-    print("File sent")
+    print('\033[1A' + "File sent successfully")
 
 
 def get_file(conn, cmd_opt):
@@ -94,16 +98,21 @@ def get_file(conn, cmd_opt):
 
     # receive file size
     file_size = int(conn.recv(1024).decode())
+    og_file_size = file_size
     ack(conn)
 
+    total_received = 0
+    print('Received: ' + str(round(total_received / og_file_size * 100, 2)) + '%')
     with open(file_name, "wb") as f:
         while file_size > 0:
             data = conn.recv(2048)
             f.write(data)
             file_size -= len(data)
+            total_received += len(data)
+            print('\033[1A' + 'Received: ' + str(round(total_received / og_file_size * 100, 2)) + '%')
 
     # ack(conn)
-    print("File received")
+    print('\033[1A' + "File received successfully")
 
 
 def delete_file(conn, cmd_opt):

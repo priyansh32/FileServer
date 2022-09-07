@@ -20,7 +20,6 @@ def create_socket():
     try:
         global c
         c = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        # persistent connection
         c.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         c.settimeout(1)
     except socket.error as msg:
@@ -28,15 +27,12 @@ def create_socket():
         sys.exit()
 
 
-def connect_socket(count):
-    if count == 5:
-        print("Connection failed")
-        sys.exit()
+def connect_socket():
     try:
         global host
         global port
         host = 'localhost'
-        port = 12001
+        port = 12000
         c.connect((host, port))
     except socket.error as msg:
         print("Socket connection error: " + str(msg) + "\n")
@@ -98,7 +94,7 @@ def start_communication():
 
 def main():
     create_socket()
-    connect_socket(0)
+    connect_socket()
     start_communication()
 
 

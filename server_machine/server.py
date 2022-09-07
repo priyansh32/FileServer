@@ -15,9 +15,8 @@ def create_socket():
         global port
         global s
         host = ''
-        port = 12001
+        port = 12000
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        # persistent connection
         s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         s.settimeout(5)
     except socket.error as msg:
@@ -106,15 +105,20 @@ def send_file(conn):
     # reading file in one go will consume more memory
     # since sending file would require loading file into main memory
     # so, we read file in chunks and send them
+    total_sent = 0
+    print('Sent: ' + str(round(total_sent / file_size * 100, 2)) + '%')
     with open(file_name, 'rb') as f:
         while True:
-            data = f.read(1024)
+            data = f.read(2048)
             if not data:
                 break
             conn.send(data)
+            total_sent += len(data)
+            # print percentage of file sent precision to 2 decimal places
+            print('\033[1A' + 'Sent: ' + str(round(total_sent / file_size * 100, 2)) + '%')
 
     # conn.recv(1024)
-    print("File sent")
+    print('\033[1A' + "File sent successfully")
 
 
 def receive_file(conn):
@@ -124,17 +128,21 @@ def receive_file(conn):
 
     file_size = int(conn.recv(1024).decode())
     conn.send(bytes("1", "utf-8"))
-
     # receive file
+    og_file_size = file_size
+    total_received = 0
+    print('Received: ' + str(round(total_received / og_file_size * 100, 2)) + '%')
     with open(file_name, 'wb') as f:
         while file_size > 0:
             data = conn.recv(2048)
             f.write(data)
             file_size -= len(data)
+            total_received += len(data)
+            print('\033[1A' + 'Received: ' + str(round(total_received / og_file_size * 100, 2)) + '%')
 
     # acknowledge
     # conn.send(bytes("1", "utf-8"))
-    print("File received")
+    print('\033[1A' + "File received successfully")
 
 
 def delete_file(conn):
