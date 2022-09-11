@@ -31,7 +31,7 @@ def connect_socket():
     try:
         global host
         global port
-        host = 'localhost'
+        host = input("Enter host: ")
         port = 12000
         c.connect((host, port))
     except socket.error as msg:
