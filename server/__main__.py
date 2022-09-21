@@ -115,7 +115,8 @@ def send_file(conn):
             conn.send(data)
             total_sent += len(data)
             # print percentage of file sent precision to 2 decimal places
-            print('\033[1A' + 'Sent: ' + str(round(total_sent / file_size * 100, 2)) + '%')
+            print('\033[1A' + 'Sent: ' +
+                  str(round(total_sent / file_size * 100, 2)) + '%')
 
     # conn.recv(1024)
     print('\033[1A' + "File sent successfully")
@@ -138,7 +139,8 @@ def receive_file(conn):
             f.write(data)
             file_size -= len(data)
             total_received += len(data)
-            print('\033[1A' + 'Received: ' + str(round(total_received / og_file_size * 100, 2)) + '%')
+            print('\033[1A' + 'Received: ' +
+                  str(round(total_received / og_file_size * 100, 2)) + '%')
 
     # acknowledge
     # conn.send(bytes("1", "utf-8"))
@@ -193,4 +195,5 @@ def main():
     socket_accept()
 
 
-main()
+if __name__ == "__main__":
+    main()

@@ -2,7 +2,7 @@
 
 import socket
 import sys
-from client_functions import *
+from functions import *
 
 
 global host
@@ -98,4 +98,5 @@ def main():
     start_communication()
 
 
-main()
+if __name__ == '__main__':
+    main()
