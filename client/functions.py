@@ -1,7 +1,7 @@
 import os
 from shlex import split as split_cmd
 
-valid_commands = ["quit", "ls", "cd", "pwd", "get", "put", "delete"]
+valid_commands = ["quit", "ls", "cd", "pwd", "get", "put", "delete", "help"]
 
 help_text = "Commands:\nquit - quit client\n" \
             "ls - list files in current directory\n" \
@@ -74,7 +74,8 @@ def put_file(conn, cmd_opt):
                 break
             conn.send(data)
             total_sent += len(data)
-            print('\033[1A' + 'Sent: ' + str(round(total_sent / file_size * 100, 2)) + '%')
+            print('\033[1A' + 'Sent: ' +
+                  str(round(total_sent / file_size * 100, 2)) + '%')
 
     print('\033[1A' + "File sent successfully")
 
@@ -109,7 +110,8 @@ def get_file(conn, cmd_opt):
             f.write(data)
             file_size -= len(data)
             total_received += len(data)
-            print('\033[1A' + 'Received: ' + str(round(total_received / og_file_size * 100, 2)) + '%')
+            print('\033[1A' + 'Received: ' +
+                  str(round(total_received / og_file_size * 100, 2)) + '%')
 
     # ack(conn)
     print('\033[1A' + "File received successfully")
@@ -170,5 +172,3 @@ def quit_connection(conn, cmd_opt):
     conn.close()
     print("Connection closed")
     exit(0)
-
-

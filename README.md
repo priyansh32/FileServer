@@ -25,9 +25,8 @@ It's a command line application to transfer files between two machines. Client c
 ## If you encounter any error or unhandled exceptions, DM me on [twitter](https://twitter.com/priyanshh32) or open an issue.
 ## Screenshots
 
-![image](https://user-images.githubusercontent.com/75668169/189548487-7e3adb5d-9eb8-483d-b897-00a169eaffec.png)
-
-![image](https://user-images.githubusercontent.com/75668169/189548493-db4f9be3-0038-4e3b-a17f-d9bc6995f93b.png)
+![img.png](img.png)
+![img_1.png](img_1.png)
 
 ## Authors
 
